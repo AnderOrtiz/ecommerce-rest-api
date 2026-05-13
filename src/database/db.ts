@@ -26,7 +26,7 @@ export class DataBase {
         });
     }
 
-    public static getInstance(): DataBase {
+    public static getDataBaseInstance(): DataBase {
         if (!DataBase.instance) {
             DataBase.instance = new DataBase();
         }
