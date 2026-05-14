@@ -1,8 +1,6 @@
 import { User } from "../entities/user.entity";
 import { DataBase } from "../database/db";
 import { IUser, IUserResponse } from '../interfaces/user.interface';
-import { resolve } from "node:dns";
-import { response } from "express";
 
 
 export class UserService {
@@ -13,8 +11,8 @@ export class UserService {
         return this.userRepository.find();
     }
 
-    async getUserByID(id: string) {
-        const user: Promise<IUser | null> = await this.userRepository.findOneBy({ id });
+    async getUserById(id: string) {
+        const user = await this.userRepository.findOneBy({ id });
 
         if (user !== null) {
             const response: IUserResponse = {
@@ -22,12 +20,11 @@ export class UserService {
                 name: user.name,
                 email: user.email
             }
-
-            return response
+            return response;
         }
 
+        return null;
     }
-
 
     createUser(user: IUser) {
         const newUser = new User();

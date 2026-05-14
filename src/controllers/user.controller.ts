@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 import { UserService } from "../services/user.service";
 import { IUser } from "../interfaces/user.interface";
 
@@ -17,13 +17,16 @@ export class UserController {
         });
     }
 
-    async getUserById(req: Request, res: Request) {
-        const { id } = req.params;
-        const user = await this.userService.getUserByID(id);
+    async getUserById(req: Request, res: Response) {
+        const id = String(req.params.id);
 
-        res.status(200).json({
-            data: user
-        })
+        const user = await this.userService.getUserById(id);
+
+        if (!user) {
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
+
+        res.status(200).json({ data: user });
     }
 
     async createUser(req: Request, res: Response) {
