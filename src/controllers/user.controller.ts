@@ -38,4 +38,39 @@ export class UserController {
             message: "Usuario creado correctamente",
         })
     }
+
+
+    async updateUser(req: Request, res: Response) {
+        const id = String(req.params.id);
+        const user: Partial<IUser> = req.body;
+
+        const updatedUser = await this.userService.updateUser(id, user);
+
+        if (!updatedUser) {
+            return res.status(404).json({
+                message: "Usuario no encontrado"
+            });
+        }
+
+        res.status(200).json({
+            message: "Usuario actualizado correctamente",
+            data: updatedUser
+        });
+    }
+
+    async deleteUserById(req: Request, res: Response) {
+        const id = String(req.params.id);
+
+        const deleted = await this.userService.deleteUserById(id);
+
+        if (!deleted) {
+            return res.status(404).json({
+                message: "Usuario no encontrado"
+            });
+        }
+
+        res.status(200).json({
+            message: "Usuario eliminado correctamente"
+        });
+    }
 }

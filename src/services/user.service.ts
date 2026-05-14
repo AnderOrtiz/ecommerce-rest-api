@@ -34,4 +34,32 @@ export class UserService {
 
         return this.userRepository.save(newUser);
     }
+
+    async updateUser(id: string, user: Partial<IUser>) {
+        const oldUser = await this.userRepository.findOneBy({ id });
+
+        if (oldUser === null) {
+            return null;
+        }
+
+        const updatedUser = {
+            name: user.name ?? oldUser.name,
+            email: user.email ?? oldUser.email,
+            password: user.password ?? oldUser.password,
+        }
+
+        await this.userRepository.update(id, updatedUser);
+
+        return updatedUser;
+    }
+
+    async deleteUserById(id: string): Promise<boolean> {
+        try {
+            const result = await this.userRepository.delete(id);
+            return result.affected !== 0;
+        } catch (error) {
+            console.error("Error al eliminar usuario:", error);
+            return false;
+        }
+    }
 }
