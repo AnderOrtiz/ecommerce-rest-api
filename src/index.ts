@@ -1,6 +1,7 @@
 import express from 'express';
 import DataBase from './database/db';
 import userRouter from './routers/user.routes';
+import categoryRouter from './routers/category.routes';
 
 const app = express();
 
@@ -14,6 +15,8 @@ main();
 app.use(express.json());
 
 app.use('/api/', userRouter)
+
+app.use('/api/', categoryRouter)
 
 app.get('/', (req, res) => res.send('Hello World!'));
 

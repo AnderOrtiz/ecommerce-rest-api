@@ -1,7 +1,7 @@
 import { DataSource } from "typeorm";
 import { User } from "../entities/user.entity";
 import { Producto } from "../entities/product.entity";
-import { Categoria } from "../entities/category.entity";
+import { Category } from "../entities/category.entity";
 
 export class DataBase {
     private static instance: DataBase;
@@ -21,7 +21,7 @@ export class DataBase {
             username,
             password,
             database,
-            entities: [User, Producto, Categoria],
+            entities: [User, Producto, Category],
             synchronize: true,
         });
     }
